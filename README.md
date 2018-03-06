@@ -1,3 +1,3 @@
-# scm_services
 
-a [Sails](http://sailsjs.org) application
+# CM_VirtualClassroomServices
+CM_VirtualClassroomServices
