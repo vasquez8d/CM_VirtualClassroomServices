@@ -39,9 +39,24 @@ module.exports.routes = {
   /***************************************************************************
   * routes User                                                              *
   ***************************************************************************/
-  'get /listarxxx':{
+  'post /user/login':{
     controller: 'UserController',
-    action: 'test'
-  }
-
+    action: 'login'
+  },
+  'post /user/create':{
+    controller: 'UserController',
+    action: 'create'
+  },
+  'post /user/update':{
+    controller: 'UserController',
+    action: 'update'
+  },
+  'get /user/list':{
+    controller: 'UserController',
+    action: 'list'
+  },
+  'get /user/details/:user_id':{
+    controller: 'UserController',
+    action: 'details'
+  },
 };
