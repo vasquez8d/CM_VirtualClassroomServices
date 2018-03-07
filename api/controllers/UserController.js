@@ -28,7 +28,8 @@ module.exports = {
                 // var hash = bcrypt.hashSync(myPlaintextPassword, saltRounds);
                 if(bcrypt.compareSync(registros[0].user_pw, dataLogin.user_pw)){
                     dataResponse.data_result = registros[0].user_id;
-                    var _token = jwt.sign({ user : dataLogin.user_mail, password : dataLogin.user_pw }, 'avasquez');
+                    var jwtKey = sails.config.values.jwtkey;
+                    var _token = jwt.sign({ user: dataLogin.user_mail, password: dataLogin.user_pw }, jwtKey);
                     dataResponse.token = _token;
                     dataResponse.res_service = "200 ok";
                     res.json(dataResponse);
@@ -55,13 +56,14 @@ module.exports = {
             des_error : ""
         };
         var dataToken = req.headers.authorization;
-        jwt.verify(dataToken, 'avasquez', function(err, decoded) {
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function(err, decoded) {
             if (err) {
                 dataResponse.res_service = "401 unauthorized";
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                console.log(decoded);
+                // console.log(decoded);
                 var dataCreate = req.allParams();
                 User.create(dataCreate, function(err, response){
                     if(err){
@@ -88,13 +90,14 @@ module.exports = {
             des_error : ""
         };
         var dataToken = req.headers.authorization;
-        jwt.verify(dataToken, 'avasquez', function(err, decoded) {
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function(err, decoded) {
             if (err) {
                 dataResponse.res_service = "401 unauthorized";
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                console.log(decoded);
+                // console.log(decoded);
                 var dataUpdate = req.allParams();
                 var filterUpdate = {
                     user_id : dataUpdate.user_id
@@ -118,6 +121,48 @@ module.exports = {
             }
         });
     },
+    delete: function(req, res)
+    {
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var dataToken = req.headers.authorization;
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                // console.log(decode);d
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro : 0
+                }
+                var filterUpdate = {
+                    user_id: dataRequest.user_id
+                }
+                User.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.data_result = response[0];
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse)
+                        } else {
+                            dataResponse.res_service = 'No se eliminó el usuario.';
+                            res.json(dataResponse)
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error elimando el usuario.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    });
+            }
+        });
+    },
     list: function(req, res){
         var dataResponse = {
             data_result : "",
@@ -125,13 +170,14 @@ module.exports = {
             des_error : ""
         };
         var dataToken = req.headers.authorization;
-        jwt.verify(dataToken, 'avasquez', function(err, decoded) {
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function(err, decoded) {
             if (err) {
                 dataResponse.res_service = "401 unauthorized";
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                console.log(decoded);
+                // console.log(decoded);
                 User.find({select:['user_id','user_mail','user_pri_nom','user_seg_nom','user_ape_pat','user_ape_mat','user_num_cell']})
                 .then(function(response){
                     if(response.length>0){
@@ -158,13 +204,14 @@ module.exports = {
             des_error : ""
         };
         var dataToken = req.headers.authorization;
-        jwt.verify(dataToken, 'avasquez', function(err, decoded) {
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function(err, decoded) {
             if (err) {
                 dataResponse.res_service = "401 unauthorized";
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                console.log(decoded);
+                // console.log(decoded);
                 var dataDetails = req.allParams();
                 User.find({user_id : dataDetails.user_id, est_registro : 1},
                     {select:['user_id','user_mail','user_pri_nom','user_seg_nom','user_ape_pat','user_ape_mat','user_num_cell']})

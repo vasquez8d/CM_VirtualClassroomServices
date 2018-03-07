@@ -51,6 +51,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'update'
   },
+  'get /user/delete/:user_id': {
+    controller: 'UserController',
+    action: 'delete'
+  },
   'get /user/list':{
     controller: 'UserController',
     action: 'list'
@@ -58,5 +62,33 @@ module.exports.routes = {
   'get /user/details/:user_id':{
     controller: 'UserController',
     action: 'details'
+  },
+
+  /***************************************************************************
+  * routes Course                                                            *
+  ***************************************************************************/
+  'post /course/create': {
+    controller: 'CourseController',
+    action: 'create'
+  },
+  'post /course/update': {
+    controller: 'CourseController',
+    action: 'update'
+  },
+  'get /course/delete/:cor_id': {
+    controller: 'CourseController',
+    action: 'delete'
+  },
+  'get /course/list': {
+    controller: 'CourseController',
+    action: 'list'
+  },
+  'get /course/details/:cor_id': {
+    controller: 'CourseController',
+    action: 'details'
+  },
+  'get /course/listcateg/:cat_cor_id': {
+    controller: 'CourseController',
+    action: 'listcateg'
   },
 };
