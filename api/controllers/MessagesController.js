@@ -1,7 +1,7 @@
 /**
- * CategoryCourseController
+ * MessagesController
  *
- * @description :: Server-side logic for managing Categorycourses
+ * @description :: Server-side logic for managing messages
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var jwt = require('jsonwebtoken');
@@ -21,10 +21,10 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataCreate = req.allParams();
-                CategoryCourse
+                Messages
                     .create(dataCreate, function (err, response) {
                     if (err) {
-                        dataResponse.res_service = "Error creando la categoría.";
+                        dataResponse.res_service = "Error creando el mensaje.";
                         dataResponse.des_error = err;
                     } else {
                         if (response.length > 0) {
@@ -32,7 +32,7 @@ module.exports = {
                             dataResponse.data_result = response[0];
                             dataResponse.res_service = "ok";
                         } else {
-                            dataResponse.res_service = 'No se creo la categoría.';
+                            dataResponse.res_service = 'No se creo el mensaje.';
                         }
                     }
                 });
@@ -55,9 +55,9 @@ module.exports = {
             } else {
                 var dataUpdate = req.allParams();
                 var filterUpdate = {
-                    cat_cor_id: dataUpdate.cat_cor_id
+                    msg_id: dataUpdate.msg_id
                 }
-                CategoryCourse
+                Messages
                     .update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
@@ -65,19 +65,19 @@ module.exports = {
                             dataResponse.res_service = "ok";
                             res.json(dataResponse)
                         } else {
-                            dataResponse.res_service = 'No se actualizó la categoría.';
+                            dataResponse.res_service = 'No se actualizó el mensaje.';
                             res.json(dataResponse)
                         }
                     })
                     .catch(function (err) {
-                        dataResponse.res_service = "Error actualizando la categoría.";
+                        dataResponse.res_service = "Error actualizando el mensaje.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
                     });
             }
         });
     },
-    list: function(req, res){
+    updateview: function(req, res){
         var dataResponse = {
             data_result: "",
             res_service: "",
@@ -91,8 +91,51 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                CategoryCourse.find({ est_registro : 1},
-                          { select: ['cat_cor_id', 'cat_cor_name'] })
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    msg_flg_view : '0'
+                }
+                var filterUpdate = {
+                    msg_id: dataUpdate.msg_id
+                }
+                Messages
+                    .update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.data_result = response[0];
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse)
+                        } else {
+                            dataResponse.res_service = 'No se actualizó el mensaje visto.';
+                            res.json(dataResponse)
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error actualizando el mensaje visto.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    });
+            }
+        });
+    },
+    listusersed: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                Messages
+                    .find({ est_registro : 1, user_sed: dataRequest.user_sed},
+                          { select: ['msg_id', 'msg_text', 'msg_flg_view', 'user_sed', 'user_rec' ,'fec_registro'] })
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.data_result = response;
@@ -104,7 +147,43 @@ module.exports = {
                         }
                     })
                     .catch(function (err) {
-                        dataResponse.res_service = "Error listando las categorías.";
+                        dataResponse.res_service = "Error listando los mensajes.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    });
+            }
+        });
+    },
+    listuserrec: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                Messages
+                    .find({ est_registro : 1, user_rec: dataRequest.user_rec},
+                          { select: ['msg_id', 'msg_text', 'msg_flg_view', 'user_sed', 'user_rec' ,'fec_registro'] })
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.data_result = response;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existen datos.";
+                            res.json(dataResponse);
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error listando los mensajes.";
                         dataResponse.des_error = err;
                         res.json(dataResponse);
                     });
@@ -126,27 +205,27 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                // console.log(decode);d
+                // console.log(decode);
                 var dataRequest = req.allParams();
                 var dataUpdate = {
                     est_registro : 0
                 }
                 var filterUpdate = {
-                    cat_cor_id: dataRequest.cat_cor_id
+                    msg_id: dataRequest.msg_id
                 }
-                CategoryCourse
+                Messages
                     .update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.res_service = "ok";
                             res.json(dataResponse)
                         } else {
-                            dataResponse.res_service = 'No se eliminó la categoría.';
+                            dataResponse.res_service = 'No se eliminó el mensaje.';
                             res.json(dataResponse)
                         }
                     })
                     .catch(function (err) {
-                        dataResponse.res_service = "Error elimando la categoría.";
+                        dataResponse.res_service = "Error elimando el mensaje.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
                     });

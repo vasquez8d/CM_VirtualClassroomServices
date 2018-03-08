@@ -5,7 +5,6 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var jwt = require('jsonwebtoken');
-
 module.exports = {
 	create: function(req, res){
         var dataResponse = {

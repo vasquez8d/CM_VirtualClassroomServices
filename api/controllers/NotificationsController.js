@@ -1,7 +1,7 @@
 /**
- * CategoryCourseController
+ * NotificationsController
  *
- * @description :: Server-side logic for managing Categorycourses
+ * @description :: Server-side logic for managing notifications
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var jwt = require('jsonwebtoken');
@@ -21,10 +21,10 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataCreate = req.allParams();
-                CategoryCourse
+                Notifications
                     .create(dataCreate, function (err, response) {
                     if (err) {
-                        dataResponse.res_service = "Error creando la categoría.";
+                        dataResponse.res_service = "Error creando la notif.";
                         dataResponse.des_error = err;
                     } else {
                         if (response.length > 0) {
@@ -32,14 +32,14 @@ module.exports = {
                             dataResponse.data_result = response[0];
                             dataResponse.res_service = "ok";
                         } else {
-                            dataResponse.res_service = 'No se creo la categoría.';
+                            dataResponse.res_service = 'No se creo la notif.';
                         }
                     }
                 });
             }
         });
     },
-    update: function(req, res){
+    updateview: function(req, res){
         var dataResponse = {
             data_result: "",
             res_service: "",
@@ -53,11 +53,14 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                var dataUpdate = req.allParams();
-                var filterUpdate = {
-                    cat_cor_id: dataUpdate.cat_cor_id
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    notf_flg_view : '0'
                 }
-                CategoryCourse
+                var filterUpdate = {
+                    notf_id: dataRequest.notf_id
+                }
+                Notifications
                     .update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
@@ -65,12 +68,12 @@ module.exports = {
                             dataResponse.res_service = "ok";
                             res.json(dataResponse)
                         } else {
-                            dataResponse.res_service = 'No se actualizó la categoría.';
+                            dataResponse.res_service = 'No se actualizó la notif.';
                             res.json(dataResponse)
                         }
                     })
                     .catch(function (err) {
-                        dataResponse.res_service = "Error actualizando la categoría.";
+                        dataResponse.res_service = "Error actualizando la notif.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
                     });
@@ -91,8 +94,12 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                CategoryCourse.find({ est_registro : 1},
-                          { select: ['cat_cor_id', 'cat_cor_name'] })
+                var dataRequest = req.allParams();
+                Notifications
+                    .find({ est_registro : 1, user_id: dataRequest.user_id},
+                          { select: ['notf_id', 'notf_text', 'notf_flg_view', 'notf_redirect', 'notf_icon', 'fec_registro']})
+                    .sort({ fec_registro: "DESC"})
+                    .limit(5)
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.data_result = response;
@@ -104,51 +111,9 @@ module.exports = {
                         }
                     })
                     .catch(function (err) {
-                        dataResponse.res_service = "Error listando las categorías.";
+                        dataResponse.res_service = "Error listando las notif.";
                         dataResponse.des_error = err;
                         res.json(dataResponse);
-                    });
-            }
-        });
-    },
-    delete: function(req, res)
-    {
-        var dataResponse = {
-            data_result: "",
-            res_service: "",
-            des_error: ""
-        };
-        var dataToken = req.headers.authorization;
-        var jwtKey = sails.config.values.jwtkey;
-        jwt.verify(dataToken, jwtKey, function (err, decoded) {
-            if (err) {
-                dataResponse.res_service = "401 unauthorized";
-                dataResponse.des_error = err;
-                res.json(dataResponse);
-            } else {
-                // console.log(decode);d
-                var dataRequest = req.allParams();
-                var dataUpdate = {
-                    est_registro : 0
-                }
-                var filterUpdate = {
-                    cat_cor_id: dataRequest.cat_cor_id
-                }
-                CategoryCourse
-                    .update(filterUpdate, dataUpdate)
-                    .then(function (response) {
-                        if (response.length > 0) {
-                            dataResponse.res_service = "ok";
-                            res.json(dataResponse)
-                        } else {
-                            dataResponse.res_service = 'No se eliminó la categoría.';
-                            res.json(dataResponse)
-                        }
-                    })
-                    .catch(function (err) {
-                        dataResponse.res_service = "Error elimando la categoría.";
-                        dataResponse.des_error = err;
-                        res.json(dataResponse)
                     });
             }
         });

@@ -147,7 +147,6 @@ module.exports = {
                 User.update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
-                            dataResponse.data_result = response[0];
                             dataResponse.res_service = "ok";
                             res.json(dataResponse)
                         } else {
