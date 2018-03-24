@@ -1,3 +1,4 @@
 module.exports.values = {
-    jwtkey: 'avasquez'
+    jwtkey: 'avasquez',
+    cryptoJsKey: 'avasquez'
 };

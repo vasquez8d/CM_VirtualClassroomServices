@@ -13,13 +13,26 @@ module.exports = {
       primaryKey: true,
       unique: true,
       autoIncrement: true,
-      type: "integer"
+      type: 'integer'
     },
-    user_mail: 'string',
-    user_pw: 'string',
-    user_pri_nom: 'string',
+    user_mail: {
+      type: 'string',
+      required: true,
+      unique: true
+    },
+    user_pw: {
+      type: 'string',
+      required: true
+    },
+    user_pri_nom: {
+      type: 'string',
+      required: true
+    },
     user_seg_nom: 'string',
-    user_ape_pat: 'string',
+    user_ape_pat: {
+      type: 'string',
+      required: true
+    },
     user_ape_mat: 'string',
     user_fec_nac: 'datetime',
     user_ubigeo : 'string',
@@ -27,10 +40,24 @@ module.exports = {
     user_num_fijo: 'string',
     user_ult_con: 'datetime',
     user_desc: 'string',
-    rol_id: 'integer',
-    est_registro: 'integer',
-    fec_registro: 'datetime',
-    usu_registro: 'string'
+    rol_id: {
+      type: 'integer',
+      required: true
+    },
+    est_registro:  {
+      type: 'integer',
+      defaultsTo: 1
+    },
+    fec_registro: {
+      type: 'datetime',
+      defaultsTo: function () {
+        return new Date();
+      }
+    },
+    usu_registro: {
+      type: 'string',
+      required: true
+    }
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

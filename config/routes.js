@@ -47,6 +47,14 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'create'
   },
+  'post /user/createwo': {
+    controller: 'UserController',
+    action: 'createwoauth'
+  },
+  'get /user/userauth' : {
+    controller: 'UserController',
+    action: 'userauth'
+  },
   'post /user/update':{
     controller: 'UserController',
     action: 'update'
