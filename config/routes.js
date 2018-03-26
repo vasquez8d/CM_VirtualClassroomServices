@@ -41,35 +41,59 @@ module.exports.routes = {
   ***************************************************************************/
   'post /user/login':{
     controller: 'UserController',
-    action: 'login'
+    action: 'login',
+    cors: {
+      origin: '*'
+    }
   },
   'post /user/create':{
     controller: 'UserController',
-    action: 'create'
+    action: 'create',
+    cors: {
+      origin: '*'
+    }
   },
   'post /user/createwo': {
     controller: 'UserController',
-    action: 'createwoauth'
+    action: 'createwoauth',
+    cors: {
+      origin: '*'
+    }
   },
   'get /user/userauth' : {
     controller: 'UserController',
-    action: 'userauth'
+    action: 'userauth',
+    cors: {
+      origin: '*'
+    }
   },
   'post /user/update':{
     controller: 'UserController',
-    action: 'update'
+    action: 'update',
+    cors: {
+      origin: '*'
+    }
   },
   'get /user/delete/:user_id': {
     controller: 'UserController',
-    action: 'delete'
+    action: 'delete',
+    cors: {
+      origin: '*'
+    }
   },
   'get /user/list':{
     controller: 'UserController',
-    action: 'list'
+    action: 'list',
+    cors: {
+      origin: '*'
+    }
   },
   'get /user/details/:user_id':{
     controller: 'UserController',
-    action: 'details'
+    action: 'details',
+    cors: {
+      origin: '*'
+    }
   },
 
   /***************************************************************************
