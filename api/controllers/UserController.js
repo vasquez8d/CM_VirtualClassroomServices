@@ -65,7 +65,9 @@ module.exports = {
               {select: ['user_id', 'user_mail', 'user_pri_nom', 'user_pw', 'rol_id']})
         .then(function(registros){
             if(registros.length>0){
+                dataResponse.data_result = registros[0];
                 dataResponse.res_service = "ok";
+                res.json(dataResponse);
             }else{
                 dataResponse.type_error = 'email';
                 dataResponse.res_service = 'El usuario no existe.';
