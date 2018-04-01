@@ -46,6 +46,13 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /user/usermailprovider' : {
+    controller: 'UserController',
+    action: 'checkuserprovider',
+    cors: {
+      origin: '*'
+    }
+  },
   'post /user/create':{
     controller: 'UserController',
     action: 'create',
