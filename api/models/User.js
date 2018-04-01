@@ -57,7 +57,13 @@ module.exports = {
     usu_registro: {
       type: 'string',
       required: true
-    }
+    },
+    user_reg_provider: {
+      type: 'string'
+    },
+    user_reg_provider_id : {
+      type: 'string'
+    },
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
