@@ -199,12 +199,17 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                // console.log(decoded);
+
                 var dataUpdate = req.allParams();
+                
+                console.log(dataUpdate);
+
+                var dataPersonalInfo = dataUpdate.personalInfo;
+
                 var filterUpdate = {
                     user_id : dataUpdate.user_id
                 }
-                User.update(filterUpdate, dataUpdate)
+                User.update(filterUpdate, dataPersonalInfo)
                     .then(function(response){
                         if(response.length>0){
                             dataResponse.data_result = response[0];
