@@ -46,6 +46,13 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'post /user/usermailprovider' : {
+    controller: 'UserController',
+    action: 'checkuserprovider',
+    cors: {
+      origin: '*'
+    }
+  },
   'post /user/create':{
     controller: 'UserController',
     action: 'create',
@@ -95,7 +102,16 @@ module.exports.routes = {
       origin: '*'
     }
   },
-
+  /***************************************************************************
+  * routes Course                                                            *
+  ***************************************************************************/
+  'get /emailauth/gencode/:user_mail': {
+    controller: 'ValidateMailController',
+    action: 'validatemailwoauth',
+    cors: {
+      origin: '*'
+    }
+  },
   /***************************************************************************
   * routes Course                                                            *
   ***************************************************************************/

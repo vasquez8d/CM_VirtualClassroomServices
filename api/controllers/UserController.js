@@ -52,6 +52,34 @@ module.exports = {
             res.json(dataResponse);
         });
     },
+    checkuserprovider: function(req, res){
+        var dataResponse = {
+            data_result : "",
+            res_service : "",
+            des_error : "",
+            type_error: ""
+        };
+        var dataCheck = req.allParams();
+        User
+        .find({user_mail: dataCheck.email, user_reg_provider: dataCheck.provider, user_reg_provider_id: dataCheck.id}, 
+              {select: ['user_id', 'user_mail', 'user_pri_nom', 'user_pw', 'rol_id']})
+        .then(function(registros){
+            if(registros.length>0){
+                dataResponse.data_result = registros[0];
+                dataResponse.res_service = "ok";
+                res.json(dataResponse);
+            }else{
+                dataResponse.type_error = 'email';
+                dataResponse.res_service = 'El usuario no existe.';
+                res.json(dataResponse);
+            }
+        })
+        .catch(function(err){
+            dataResponse.res_service = 'Error obteniendo el usuario.';
+            dataResponse.des_error = err;
+            res.json(dataResponse);
+        });
+    },
     // ---Create users
     createwoauth: function(req, res){
         var dataResponse = {
