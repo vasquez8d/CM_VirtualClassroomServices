@@ -227,13 +227,8 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-
                 var dataUpdate = req.allParams();
-                
-                console.log(dataUpdate);
-
                 var dataPersonalInfo = dataUpdate.personalInfo;
-
                 var filterUpdate = {
                     user_id : dataUpdate.user_id
                 }
@@ -345,26 +340,34 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                // console.log(decoded);
                 var dataDetails = req.allParams();
-                User.find({user_id : dataDetails.user_id, est_registro : 1},
-                    { select: ['user_id', 'user_mail', 'user_pri_nom', 'user_seg_nom', 'user_ape_pat', 'user_ape_mat', 
-                        'user_num_cell', 'user_fec_nac', 'user_ubigeo', 'user_num_cell', 'user_desc']})
-                    .then(function(response){
-                        if(response.length>0){
-                            dataResponse.data_result = response[0];
-                            dataResponse.res_service = "ok";
+                try{
+                    User.find({ user_id: dataDetails.user_id, est_registro: 1 },
+                        {
+                            select: ['user_id', 'user_mail', 'user_pri_nom', 
+                                     'user_seg_nom', 'user_ape_pat', 'user_ape_mat',
+                                     'user_dpt', 'user_prv', 'user_dst',
+                                     'user_num_cell', 'user_fec_nac', 'user_num_cell', 
+                                     'user_desc']
+                        })
+                        .then(function (response) {
+                            if (response.length > 0) {
+                                dataResponse.data_result = response[0];
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse);
+                            } else {
+                                dataResponse.res_service = "No existen datos.";
+                                res.json(dataResponse);
+                            }
+                        })
+                        .catch(function (err) {
+                            dataResponse.res_service = "Error obteniendo el detalle de un usuario.";
+                            dataResponse.des_error = err;
                             res.json(dataResponse);
-                         }else{
-                            dataResponse.res_service = "No existen datos.";
-                            res.json(dataResponse);
-                         }
-                    })
-                    .catch(function(err){
-                        dataResponse.res_service = "Error obteniendo el detalle de un usuario.";
-                        dataResponse.des_error = err;
-                        res.json(dataResponse);
-                    });
+                        });
+                }catch(err){
+                    console.log(err);
+                }
             }
         });
     }

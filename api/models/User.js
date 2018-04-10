@@ -64,6 +64,36 @@ module.exports = {
     user_reg_provider_id : {
       type: 'string'
     },
+    user_dpt : {
+      type: 'string'
+    },
+    user_prv : {
+      type: 'string'
+    },
+    user_dst : {
+      type: 'string'
+    },
+    user_dir : {
+      type: 'string'
+    },
+    user_tim_aca : {
+      type: 'string'
+    },
+    user_est_civil : {
+      type: 'string'
+    },
+    user_flg_hijos : {
+      type: 'string'
+    },
+    user_flg_vsolo : {
+      type: 'string'
+    },
+    user_flg_inter : {
+      type: 'string'
+    },
+    user_reg_provider_photo : {
+      type: 'string'
+    }
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
