@@ -142,7 +142,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var userDecrypt = decoded;
-                console.log(userDecrypt.user);
+                // console.log(userDecrypt.user);
                 User.find({ user_mail: userDecrypt.user, est_registro: 1 },
                     { select: ['user_id', 'user_mail', 'user_pri_nom', 'user_seg_nom', 'user_ape_pat', 'rol_id'] })
                     .then(function (response) {
@@ -216,6 +216,7 @@ module.exports = {
     update: function(req, res){
         var dataResponse = {
             data_result : "",
+            data_result2 : "",
             res_service : "",
             des_error : ""
         };
@@ -228,16 +229,66 @@ module.exports = {
                 res.json(dataResponse);
             }else{
                 var dataUpdate = req.allParams();
+                
                 var dataPersonalInfo = dataUpdate.personalInfo;
+                var dataAcademyInfo = dataUpdate.academyInfo;
+
                 var filterUpdate = {
                     user_id : dataUpdate.user_id
                 }
+
                 User.update(filterUpdate, dataPersonalInfo)
                     .then(function(response){
                         if(response.length>0){
-                            dataResponse.data_result = response[0];
-                            dataResponse.res_service = "ok";
-                            res.json(dataResponse)
+
+                            if (dataAcademyInfo == null){
+                                dataResponse.data_result = response[0];
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse)
+                            }else{
+                                UserAcademy.find({ user_id: dataUpdate.user_id, est_registro: 1 },
+                                    { select: ['user_id'] })
+                                    .then(function (responseFind) {
+                                        if (responseFind.length > 0) {
+                                            UserAcademy.update(filterUpdate, dataAcademyInfo)
+                                                       .then(function (responseUpdate) {
+                                                           dataResponse.data_result = response[0];
+                                                           dataResponse.data_result2 = responseUpdate[0];
+                                                           dataResponse.res_service = "ok";
+                                                           res.json(dataResponse);
+                                                       })
+                                                       .catch(function (err) {
+                                                           dataResponse.res_service = "Error actualizando el usuario academy.";
+                                                           dataResponse.des_error = err;
+                                                           res.json(dataResponse);
+                                                       });
+                                        } else {
+                                            UserAcademy.create(dataAcademyInfo, function (err, responseCreate) {
+                                                if (err) {
+                                                    dataResponse.res_service = "Error creando el usuario.";
+                                                    dataResponse.des_error = err;
+                                                    res.json(dataResponse);
+                                                } else {
+                                                    if (responseCreate.user_id > 0) {
+                                                        responseCreate.save();
+                                                        dataResponse.data_result = response[0];
+                                                        dataResponse.data_result2 = responseCreate;
+                                                        dataResponse.res_service = "ok";
+                                                        res.json(dataResponse);
+                                                    } else {
+                                                        dataResponse.res_service = 'No se creo el usuario academy.';
+                                                        res.json(dataResponse);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    })
+                                    .catch(function (err) {
+                                        dataResponse.res_service = "Error actualizando data academy";
+                                        dataResponse.des_error = err;
+                                        res.json(dataResponse);
+                                    });
+                            }
                         }else{
                             dataResponse.res_service = 'No se actualizó el usuario.';
                             res.json(dataResponse)
