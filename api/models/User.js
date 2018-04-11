@@ -35,7 +35,6 @@ module.exports = {
     },
     user_ape_mat: 'string',
     user_fec_nac: 'datetime',
-    user_ubigeo : 'string',
     user_num_cell: 'string',
     user_num_fijo: 'string',
     user_ult_con: 'datetime',
@@ -92,6 +91,10 @@ module.exports = {
       type: 'string'
     },
     user_reg_provider_photo : {
+      type: 'string',
+      defaultsTo: 'assets/images/users/default.jpg'
+    },
+    user_dni : {
       type: 'string'
     }
   },

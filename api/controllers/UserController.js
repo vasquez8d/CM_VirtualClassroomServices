@@ -144,7 +144,7 @@ module.exports = {
                 var userDecrypt = decoded;
                 // console.log(userDecrypt.user);
                 User.find({ user_mail: userDecrypt.user, est_registro: 1 },
-                    { select: ['user_id', 'user_mail', 'user_pri_nom', 'user_seg_nom', 'user_ape_pat', 'rol_id'] })
+                    { select: ['user_id', 'user_mail', 'user_pri_nom', 'user_seg_nom', 'user_ape_pat', 'rol_id', 'user_reg_provider_photo'] })
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.data_result = response[0];
@@ -229,7 +229,7 @@ module.exports = {
                 res.json(dataResponse);
             }else{
                 var dataUpdate = req.allParams();
-                
+
                 var dataPersonalInfo = dataUpdate.personalInfo;
                 var dataAcademyInfo = dataUpdate.academyInfo;
 
@@ -240,7 +240,6 @@ module.exports = {
                 User.update(filterUpdate, dataPersonalInfo)
                     .then(function(response){
                         if(response.length>0){
-
                             if (dataAcademyInfo == null){
                                 dataResponse.data_result = response[0];
                                 dataResponse.res_service = "ok";
@@ -249,6 +248,7 @@ module.exports = {
                                 UserAcademy.find({ user_id: dataUpdate.user_id, est_registro: 1 },
                                     { select: ['user_id'] })
                                     .then(function (responseFind) {
+
                                         if (responseFind.length > 0) {
                                             UserAcademy.update(filterUpdate, dataAcademyInfo)
                                                        .then(function (responseUpdate) {
@@ -398,8 +398,50 @@ module.exports = {
                             select: ['user_id', 'user_mail', 'user_pri_nom', 
                                      'user_seg_nom', 'user_ape_pat', 'user_ape_mat',
                                      'user_dpt', 'user_prv', 'user_dst',
-                                     'user_num_cell', 'user_fec_nac', 'user_num_cell', 
+                                     'user_num_cell', 'user_fec_nac', 'user_reg_provider_photo',
+                                     'user_reg_provider',
                                      'user_desc']
+                        })
+                        .then(function (response) {
+                            if (response.length > 0) {
+                                dataResponse.data_result = response[0];
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse);
+                            } else {
+                                dataResponse.res_service = "No existen datos.";
+                                res.json(dataResponse);
+                            }
+                        })
+                        .catch(function (err) {
+                            dataResponse.res_service = "Error obteniendo el detalle de un usuario.";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        });
+                }catch(err){
+                    console.log(err);
+                }
+            }
+        });
+    },
+    detailsupdate: function(req, res){
+        var dataResponse = {
+            data_result : "",
+            res_service : "",
+            des_error : ""
+        };
+        var dataToken = req.headers.authorization;
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function(err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            }else{
+                var dataDetails = req.allParams();
+                try{
+                    User.find({ user_id: dataDetails.user_id, est_registro: 1 },
+                        {
+                            exclude: 'user_pw'
                         })
                         .then(function (response) {
                             if (response.length > 0) {

@@ -102,6 +102,20 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /user/detailsupdate/:user_id':{
+    controller: 'UserController',
+    action: 'detailsupdate',
+    cors: {
+      origin: '*'
+    }
+  },
+  'get /useracademy/detailsacademyupdate/:user_id':{
+    controller: 'UserAcademyController',
+    action: 'detailsacademyupdate',
+    cors: {
+      origin: '*'
+    }
+  },
   /***************************************************************************
   * routes Course                                                            *
   ***************************************************************************/

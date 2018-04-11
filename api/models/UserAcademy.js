@@ -20,6 +20,7 @@ module.exports = {
     user_pri_uni: 'string',
     user_seg_uni: 'string',
     user_flg_qto_sup : 'string',
+    user_uni_prc : 'string',
     est_registro: {
       type: 'integer',
       defaultsTo: 1
