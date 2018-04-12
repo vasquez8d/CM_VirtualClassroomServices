@@ -18,7 +18,7 @@ module.exports = {
         };
         var dataLogin = req.allParams();
         User
-        .find({user_mail: dataLogin.user_mail}, 
+        .find({user_mail: dataLogin.user_mail, est_registro: 1}, 
             { select: ['user_id', 'user_mail', 'user_pri_nom', 'user_pw', 'rol_id']}
              )
         .then(function(registros){
@@ -42,7 +42,7 @@ module.exports = {
                     }
             }else{
                 dataResponse.type_error = 'email';
-                dataResponse.res_service = 'El usuario no existe.';
+                dataResponse.res_service = 'El usuario no existe o deshabilitado.';
                 res.json(dataResponse);
             }
         })
@@ -296,6 +296,46 @@ module.exports = {
                     })
                     .catch(function(err){
                         dataResponse.res_service = "Error actualizando el usuario.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    });
+            }
+        });
+    },
+    enable: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var dataToken = req.headers.authorization;
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                // console.log(decode);d
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro : 1
+                }
+                var filterUpdate = {
+                    user_id: dataRequest.user_id
+                }
+                User.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse)
+                        } else {
+                            dataResponse.res_service = 'No se habilitó el usuario.';
+                            res.json(dataResponse)
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error habilitando el usuario.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
                     });

@@ -88,6 +88,13 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /user/enable/:user_id': {
+    controller: 'UserController',
+    action: 'enable',
+    cors: {
+      origin: '*'
+    }
+  },
   'get /user/list':{
     controller: 'UserController',
     action: 'list',
