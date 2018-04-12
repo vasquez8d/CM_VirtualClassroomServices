@@ -397,22 +397,15 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             }else{
-                // console.log(decoded);
-                User.find({select:['user_id','user_mail','user_pri_nom','user_seg_nom','user_ape_pat','user_ape_mat','user_num_cell']})
-                .then(function(response){
-                    if(response.length>0){
-                       dataResponse.data_result = response;
-                       dataResponse.res_service = "ok";
-                       res.json(dataResponse);
-                    }else{
-                       dataResponse.res_service = "No existen datos.";
-                       res.json(dataResponse);
+                var query = "select p.user_id, r.rol_name, r.rol_id, p.user_mail, " +
+                            "(p.user_pri_nom || ' ' ||  p.user_ape_pat || ' ' ||p.user_ape_mat) user_full_name, " +
+                            "p.user_num_cell, p.est_registro  from tbl_users p inner join tbl_roles r " +
+                            "on p.rol_id = r.rol_id";
+                User.query(query, function (err, result) {
+                    if (err) {
+                        return res.serverError(err);
                     }
-                })
-                .catch(function(err){
-                    dataResponse.res_service = "Error listando los usuarios.";
-                    dataResponse.des_error = err;
-                    res.json(dataResponse);
+                    res.json(result.rows);
                 });
             }
         });
