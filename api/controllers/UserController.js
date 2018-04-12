@@ -316,7 +316,6 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                // console.log(decode);d
                 var dataRequest = req.allParams();
                 var dataUpdate = {
                     est_registro : 1
