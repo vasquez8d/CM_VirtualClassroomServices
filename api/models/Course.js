@@ -20,14 +20,30 @@ module.exports = {
       type: 'datetime'
     },
     cor_fec_fin: 'datetime',
-    cor_price: 'double',
+    cor_price: 'decimal',
     cor_state: 'string',
     user_reg_id: 'integer',
     user_doc_id: 'integer',
     cat_cor_id: 'integer',
-    est_registro: 'integer',
-    fec_registro: 'datetime',
-    usu_registro: 'string'
+    est_registro: {
+      type: 'integer',
+      defaultsTo: 1
+    },
+    fec_registro: {
+      type: 'datetime',
+      defaultsTo: function () {
+        return new Date();
+      }
+    },
+    usu_registro: {
+      type: 'string',
+      required: true
+    },
+    cor_photo: {
+      type: 'string',
+      defaultsTo: '/images/courses/default.jpg'
+    },
+    cor_intro: 'string'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

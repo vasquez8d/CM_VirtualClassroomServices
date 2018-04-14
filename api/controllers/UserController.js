@@ -409,6 +409,34 @@ module.exports = {
             }
         });
     },
+    listteachers: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var dataToken = req.headers.authorization;
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var query = "select p.user_id, (p.user_pri_nom || ' ' ||p.user_ape_pat) doc_full_name from tbl_users p where p.rol_id = 4 and p.est_registro = 1";
+                User.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error obteniendo listTeachers.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    }
+                    dataResponse.data_result = result.rows;
+                    dataResponse.res_service = "ok";
+                    res.json(dataResponse);
+                });
+            }
+        });
+    },
     details: function(req, res){
         var dataResponse = {
             data_result : "",

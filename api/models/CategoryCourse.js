@@ -15,9 +15,21 @@ module.exports = {
       type: "integer"
     },
     cat_cor_name: 'string',
-    est_registro: 'integer',
-    fec_registro: 'datetime',
-    usu_registro: 'string'
+    cat_cor_desc: 'string',
+    est_registro: {
+      type: 'integer',
+      defaultsTo: 1
+    },
+    fec_registro: {
+      type: 'datetime',
+      defaultsTo: function () {
+        return new Date();
+      }
+    },
+    usu_registro: {
+      type: 'string',
+      required: true
+    },
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

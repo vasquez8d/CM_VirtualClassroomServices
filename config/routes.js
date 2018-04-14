@@ -102,6 +102,13 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /user/listteachers': {
+    controller: 'UserController',
+    action: 'listteachers',
+    cors: {
+      origin: '*'
+    }
+  },
   'get /user/details/:user_id':{
     controller: 'UserController',
     action: 'details',
@@ -124,7 +131,7 @@ module.exports.routes = {
     }
   },
   /***************************************************************************
-  * routes Course                                                            *
+  * routes AuthMail                                                          *
   ***************************************************************************/
   'get /emailauth/gencode/:user_mail': {
     controller: 'ValidateMailController',
@@ -132,6 +139,43 @@ module.exports.routes = {
     cors: {
       origin: '*'
     }
+  },
+  /***************************************************************************
+  * routes Category                                                          *
+  ***************************************************************************/
+  'get /corcategory/list': {
+    controller: 'CategoryCourseController',
+    action: 'list',
+    cors: {
+      origin: '*'
+    }
+  },
+  'get /corcategory/listadvance': {
+  controller: 'CategoryCourseController',
+    action: 'listadvance',
+    cors: {
+    origin: '*'
+    }
+  },
+  'post /corcategory/create': {
+    controller: 'CategoryCourseController',
+    action: 'create'
+  },
+  'post /corcategory/update': {
+    controller: 'CategoryCourseController',
+    action: 'update'
+  },
+  'get /corcategory/details/:cat_cor_id': {
+    controller: 'CategoryCourseController',
+    action: 'details'
+  },
+  'get /corcategory/delete/:cat_cor_id': {
+    controller: 'CategoryCourseController',
+    action: 'delete'
+  },
+  'get /corcategory/enable/:cat_cor_id': {
+    controller: 'CategoryCourseController',
+    action: 'enable'
   },
   /***************************************************************************
   * routes Course                                                            *
@@ -144,9 +188,17 @@ module.exports.routes = {
     controller: 'CourseController',
     action: 'update'
   },
+  'post /course/updatefilename': {
+    controller: 'CourseController',
+    action: 'updatefilename'
+  },
   'get /course/delete/:cor_id': {
     controller: 'CourseController',
     action: 'delete'
+  },
+  'get /course/enable/:cor_id': {
+  controller: 'CourseController',
+    action: 'enable'
   },
   'get /course/list': {
     controller: 'CourseController',
@@ -156,8 +208,19 @@ module.exports.routes = {
     controller: 'CourseController',
     action: 'details'
   },
+  'get /course/detailsupdate/:cor_id': {
+    controller: 'CourseController',
+    action: 'detailsupdate'
+  },
   'get /course/listcateg/:cat_cor_id': {
     controller: 'CourseController',
     action: 'listcateg'
+  },
+  'post /course/uploadimage': {
+    controller: 'CourseController',
+    action: 'uploadimage',
+    cors: {
+      origin: '*'
+    }
   },
 };
