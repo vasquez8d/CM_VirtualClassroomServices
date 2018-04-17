@@ -165,7 +165,7 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                var query = sails.config.course_querys.list_query;
+                var query = sails.config.querys.course_list_query;
                 Course.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando los cursos.";
@@ -199,7 +199,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var reqParams = req.allParams();
-                var query = sails.config.course_querys.list_x_user_query.replace('?', reqParams.user_id);
+                var query = sails.config.querys.crouse_list_x_user_query.replace('?', reqParams.user_id);
                 Course.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando los cursos.";
@@ -233,7 +233,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataDetails = req.allParams();
-                var query = sails.config.course_querys.details_query;
+                var query = sails.config.querys.course_details_query;
                 var query = 'select * from tbl_course p where p.cor_id = ' + dataDetails.cor_id;
                 Course.query(query, function (err, result) {
                     if (err) {
@@ -269,7 +269,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataDetails = req.allParams();
-                var query = sails.config.course_querys.details_query;
+                var query = sails.config.querys.course_details_query;
                 var query = query.replace('?', dataDetails.cor_id);
                 Course.query(query, function (err, result) {
                     if (err) {

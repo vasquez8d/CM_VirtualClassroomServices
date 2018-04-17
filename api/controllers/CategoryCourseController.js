@@ -123,7 +123,7 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                var query = sails.config.category_querys.list_query;
+                var query = sails.config.querys.category_list_query;
                 CategoryCourse.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando los cursos.";
@@ -241,7 +241,7 @@ module.exports = {
             } else {
                 var dataFilter = req.allParams();
                 var cat_cor_id = dataFilter.cat_cor_id;
-                var query = sails.config.category_querys.details_query.replace('?', cat_cor_id);
+                var query = sails.config.querys.category_details_query.replace('?', cat_cor_id);
                 CategoryCourse.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando los cursos.";

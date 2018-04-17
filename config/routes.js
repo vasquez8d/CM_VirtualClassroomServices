@@ -234,6 +234,10 @@ module.exports.routes = {
     controller: 'ClassController',
     action: 'create'
   },
+  'get /course/listxcourse/:cor_id': {
+    controller: 'ClassController',
+    action: 'listxcourse'
+  },
    /***************************************************************************
   * routes Comment                                                           *
   ***************************************************************************/

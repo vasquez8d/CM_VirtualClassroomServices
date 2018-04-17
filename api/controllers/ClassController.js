@@ -75,7 +75,7 @@ module.exports = {
             }
         });
     },
-    list: function (req, res) {
+    listxcourse: function (req, res) {
         var dataResponse = {
             data_result: "",
             res_service: "",
@@ -89,7 +89,7 @@ module.exports = {
                 dataResponse.des_error = err;
                 res.json(dataResponse);
             } else {
-                var query = sails.config.class_querys.list_query.replace('?','1');
+                var query = sails.config.querys.class_list_query.replace('?','1');
                 Course.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando las clases por curso.";
