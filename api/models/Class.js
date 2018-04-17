@@ -1,30 +1,23 @@
 /**
- * Course.js
+ * Class.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-  tableName: 'tbl_course',
+  tableName: 'tbl_class',
   attributes: {
-    cor_id: {
+    class_id: {
       primaryKey: true,
       unique: true,
       autoIncrement: true,
       type: "integer"
     },
-    cor_name: 'string',
-    cor_des: 'string',
-    cor_fec_ini: {
-      type: 'datetime'
-    },
-    cor_fec_fin: 'datetime',
-    cor_price: 'decimal',
-    cor_state: 'string',
-    user_reg_id: 'integer',
-    user_doc_id: 'integer',
-    cat_cor_id: 'integer',
+    class_tittle: 'string',
+    class_desc: 'string',
+    class_video_embed: 'string',
+    cor_id: 'integer',
     est_registro: {
       type: 'integer',
       defaultsTo: 1
@@ -39,17 +32,7 @@ module.exports = {
       type: 'string',
       required: true
     },
-    cor_photo: {
-      type: 'string',
-      defaultsTo: '/images/courses/default.jpg'
-    },
-    cor_intro: 'string',
-    cor_time: {
-      type: 'decimal',
-      defaultsTo: 0
-    }
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
 };
-

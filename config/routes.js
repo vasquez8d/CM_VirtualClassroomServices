@@ -204,6 +204,10 @@ module.exports.routes = {
     controller: 'CourseController',
     action: 'list'
   },
+  'get /course/listxuser/:user_id': {
+    controller: 'CourseController',
+    action: 'listxuser'
+  },
   'get /course/details/:cor_id': {
     controller: 'CourseController',
     action: 'details'
@@ -222,5 +226,26 @@ module.exports.routes = {
     cors: {
       origin: '*'
     }
+  },
+  /***************************************************************************
+   * routes Class                                                             *
+  ***************************************************************************/
+  'post /class/create': {
+    controller: 'ClassController',
+    action: 'create'
+  },
+   /***************************************************************************
+  * routes Comment                                                           *
+  ***************************************************************************/
+  'post /comment/create': {
+    controller: 'CommentClassController',
+    action: 'create'
+  },
+   /***************************************************************************
+  * routes Response Comment                                                  *
+  ***************************************************************************/
+  'post /response/create': {
+    controller: 'ResponseCommentClassController',
+    action: 'create'
   },
 };

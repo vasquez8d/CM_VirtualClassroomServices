@@ -30,6 +30,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    cat_color: {
+      type: 'string',
+      defaultsTo: '#CEF6F5'
+    }
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
