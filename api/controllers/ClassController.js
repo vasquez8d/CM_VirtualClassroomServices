@@ -58,7 +58,7 @@ module.exports = {
                     class_id: dataUpdate.class_id
                 }
                 console.log(filterUpdate);
-                Course.update(filterUpdate, dataUpdate)
+                Class.update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.data_result = response[0];
