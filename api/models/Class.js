@@ -30,8 +30,8 @@ module.exports = {
     },
     usu_registro: {
       type: 'string',
-      required: true
     },
+    class_time: 'decimal'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

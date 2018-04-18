@@ -234,9 +234,25 @@ module.exports.routes = {
     controller: 'ClassController',
     action: 'create'
   },
-  'get /course/listxcourse/:cor_id': {
+  'post /class/update': {
+    controller: 'ClassController',
+    action: 'update'
+  },
+  'get /class/listxcourse/:cor_id': {
     controller: 'ClassController',
     action: 'listxcourse'
+  },
+  'get /class/details/:class_id': {
+    controller: 'ClassController',
+    action: 'details'
+  },
+  'get /class/delete/:class_id': {
+    controller: 'ClassController',
+    action: 'delete'
+  },
+  'get /class/enable/:class_id': {
+    controller: 'ClassController',
+    action: 'enable'
   },
    /***************************************************************************
   * routes Comment                                                           *

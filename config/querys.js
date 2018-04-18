@@ -7,6 +7,6 @@ module.exports.querys = {
     category_list_query: "select ct.cat_cor_id, ct.cat_cor_name, count(tc.cor_id) num_cursos, ct.fec_registro, ct.est_registro from tbl_cat_course ct left join tbl_course tc on ct.cat_cor_id = tc.cat_cor_id group by ct.cat_cor_id, ct.cat_cor_name, ct.fec_registro, ct.est_registro",
     category_details_query: "select ct.cat_cor_id, ct.cat_color, ct.cat_cor_name, ct.cat_cor_desc, ct.usu_registro, count(tc.cor_id) num_cursos, ct.fec_registro, ct.est_registro from tbl_cat_course ct left join tbl_course tc on ct.cat_cor_id = tc.cat_cor_id where ct.cat_cor_id = ? group by ct.cat_cor_id, ct.cat_cor_name, ct.fec_registro, ct.est_registro, ct.cat_cor_desc, ct.usu_registro, ct.cat_color",
     //Class
-    class_list_query : "",
-    class_details_query: ""
+    class_list_query : "SELECT cl.class_id, cl.class_tittle, cl.class_desc, cl.class_time, cl.fec_registro, cl.est_registro, tc.cor_name FROM tbl_class cl inner join tbl_course tc on cl.cor_id = tc.cor_id where cl.cor_id = ?",
+    class_details_query: "SELECT cl.class_id, cl.class_tittle, cl.class_desc, cl.class_time, cl.fec_registro, cl.est_registro, cl.class_video_embed, tc.cor_name, (u.user_pri_nom || ' ' || u.user_ape_pat) user_reg_name, count(com.com_id) FROM tbl_class cl inner join tbl_comment com on cl.class_id = com.class_id inner join tbl_course tc on cl.cor_id = tc.cor_id inner join tbl_users u ON cl.usu_reg_id = u.user_id where cl.cor_id = ? group by cl.class_id, cl.class_tittle, cl.class_desc, cl.class_time, cl.fec_registro, cl.est_registro, cl.class_video_embed, tc.cor_name, u.user_pri_nom , u.user_ape_pat"
 };

@@ -38,6 +38,7 @@ module.exports = {
         });
     },
     update: function (req, res) {
+        console.log('update');
         var dataResponse = {
             data_result: "",
             res_service: "",
@@ -52,9 +53,11 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataUpdate = req.allParams();
+                console.log(dataUpdate);
                 var filterUpdate = {
                     class_id: dataUpdate.class_id
                 }
+                console.log(filterUpdate);
                 Course.update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
@@ -67,7 +70,6 @@ module.exports = {
                         }
                     })
                     .catch(function (err) {
-                        console.log(err);
                         dataResponse.res_service = "Error actualizando la clase.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
@@ -88,8 +90,9 @@ module.exports = {
                 dataResponse.res_service = "401 unauthorized";
                 dataResponse.des_error = err;
                 res.json(dataResponse);
-            } else {
-                var query = sails.config.querys.class_list_query.replace('?','1');
+            } else {    
+                var dataRequest = req.allParams();            
+                var query = sails.config.querys.class_list_query.replace('?', dataRequest.cor_id);
                 Course.query(query, function (err, result) {
                     if (err) {
                         dataResponse.res_service = "Error listando las clases por curso.";
@@ -123,10 +126,10 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataDetails = req.allParams();
-                var query = sails.config.course_querys.details_query.replace('?', dataDetails.class_id);
+                var query = sails.config.querys.class_details_query.replace('?', dataDetails.class_id);
                 Course.query(query, function (err, result) {
                     if (err) {
-                        dataResponse.res_service = "Error listando los cursos.";
+                        dataResponse.res_service = "Error detalle clase.";
                         dataResponse.des_error = err;
                         res.json(dataResponse)
                     }
