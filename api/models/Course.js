@@ -47,7 +47,8 @@ module.exports = {
     cor_time: {
       type: 'decimal',
       defaultsTo: 0
-    }
+    },
+    cor_slug: 'string'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

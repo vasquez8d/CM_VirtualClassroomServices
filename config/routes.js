@@ -204,6 +204,14 @@ module.exports.routes = {
     controller: 'CourseController',
     action: 'list'
   },
+  'get /course/listdashboard': {
+    controller: 'CourseController',
+    action: 'listdashboard'
+  }, 
+  'get /course/listdashboardfree': {
+    controller: 'CourseController',
+    action: 'listdashboardfree'
+  },
   'get /course/listxuser/:user_id': {
     controller: 'CourseController',
     action: 'listxuser'
