@@ -31,7 +31,32 @@ module.exports = {
                         response.save();
                         dataResponse.data_result = response;
                         dataResponse.res_service = "ok";
-                        res.json(dataResponse);
+                        Course.find({ cor_id: dataCreate.cor_id },
+                            {
+                                select: ['cor_id', 'cor_time']
+                            })
+                            .then(function (responseCor) {
+                                if (responseCor.length > 0) {
+                                    var cor_current_time = responseCor[0].cor_time;
+                                    cor_current_time = parseInt(cor_current_time) + parseInt(dataCreate.class_time);
+                                    var dataCourseUpdate = {
+                                        cor_time: cor_current_time
+                                    }
+                                    var dataCourseFilterUpdate = {
+                                        cor_id: dataCreate.cor_id
+                                    }
+                                    Course.update(dataCourseFilterUpdate, dataCourseUpdate)
+                                          .then(function(responseUpdate){
+                                            if(responseUpdate.length > 0){
+                                                dataResponse.res_service = "ok";
+                                                dataResponse["data_result_course"] = responseUpdate[0];
+                                                res.json(dataResponse)
+                                            }else{
+                                                dataResponse.res_service = "No se actualizó el tiempo del curso.";
+                                            }
+                                          });
+                                }
+                            });
                     }
                 });
             }
