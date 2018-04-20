@@ -31,6 +31,9 @@ module.exports = {
     usu_registro: {
       type: 'string',
     },
+    usu_reg_id: {
+      type: 'integer'
+    },
     class_time: 'decimal'
   },
   autoCreatedAt: false,
