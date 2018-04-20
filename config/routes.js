@@ -207,7 +207,11 @@ module.exports.routes = {
   'get /course/listdashboard': {
     controller: 'CourseController',
     action: 'listdashboard'
-  }, 
+  },
+  'get /course/listuserxcourse/:cor_id': {
+    controller: 'CourseController',
+    action: 'listuserxcourse'
+  },  
   'get /course/listdashboardfree': {
     controller: 'CourseController',
     action: 'listdashboardfree'
@@ -250,6 +254,10 @@ module.exports.routes = {
     controller: 'ClassController',
     action: 'listxcourse'
   },
+  'get /class/listxcourseenable/:cor_id': {
+    controller: 'ClassController',
+    action: 'listxcourseenable'
+  },  
   'get /class/details/:class_id': {
     controller: 'ClassController',
     action: 'details'

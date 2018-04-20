@@ -152,7 +152,42 @@ module.exports = {
                 }
             }
         });
-    },  
+    },
+    listuserxcourse: function(req, res)
+    {
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                var query = sails.config.querys.crouse_list_users_x_course.replace('?',dataRequest.cor_id);
+                Course.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error listando los cursos.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
+    },
     listdashboard: function(req, res)
     {        
         var dataResponse = {
