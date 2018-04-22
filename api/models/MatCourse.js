@@ -17,10 +17,25 @@ module.exports = {
     cor_id: 'integer',
     user_alu_id: 'integer',
     user_reg_id: 'integer',
-    mat_state: 'string',
-    est_registro: 'integer',
-    fec_registro: 'datetime',
-    usu_registro: 'string'
+    mat_state: {
+      type: 'string',
+      defaultsTo: 0
+    },
+    est_registro: {
+      type: 'integer',
+      defaultsTo: 1
+    },
+    fec_registro: {
+      type: 'datetime',
+      defaultsTo: function () {
+        return new Date();
+      }
+    },
+    usu_registro: {
+      type: 'string',
+      required: true
+    },
+    mat_voucher_img: 'string'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

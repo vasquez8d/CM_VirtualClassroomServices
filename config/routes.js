@@ -288,4 +288,34 @@ module.exports.routes = {
     controller: 'ResponseCommentClassController',
     action: 'create'
   },
+  /***************************************************************************
+  * routes Matriculas                                                        *
+  ***************************************************************************/
+  'get /mat/list': {
+    controller: 'MatCourseController',
+    action: 'list'
+  },
+  'get /mat/details/:mat_id': {
+    controller: 'MatCourseController',
+    action: 'details'
+  },
+  'get /mat/approve/:mat_id': {
+    controller: 'MatCourseController',
+    action: 'approve'
+  },
+  'get /mat/disapprove/:mat_id': {
+    controller: 'MatCourseController',
+    action: 'disapprove'
+  },
+  'post /mat/create': {
+    controller: 'MatCourseController',
+    action: 'create'
+  },
+  'post /mat/uploadimage': {
+    controller: 'MatCourseController',
+    action: 'uploadimage',
+    cors: {
+      origin: '*'
+    }
+  },
 };
