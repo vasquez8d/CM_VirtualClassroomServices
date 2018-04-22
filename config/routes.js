@@ -318,4 +318,14 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  /***************************************************************************
+  * routes Questions                                                         *
+  ***************************************************************************/
+  'post /questions/upload': {
+    controller: 'QuestionsController',
+    action: 'upload',
+    cors: {
+      origin: '*'
+    }
+  },
 };

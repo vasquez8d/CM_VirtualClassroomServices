@@ -21,6 +21,7 @@
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
     "jsonwebtoken": "^8.2.0",
+    "node-excel-to-json": "0.0.3",
     "nodemailer": "^4.6.4",
     "rc": "1.0.1",
     "sails": "~0.12.14",
