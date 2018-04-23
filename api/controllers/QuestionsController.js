@@ -89,4 +89,263 @@ module.exports = {
             }
         });
     },
+    listuploads: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var query = sails.config.querys.ques_list_query;
+                Course.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error listando las cargas.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
+    },
+    listuploadsdetails: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataReq = req.allParams();
+                var query = sails.config.querys.ques_list_det_query.replace('?', dataReq.data_id);
+                Course.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error listando las cargas detalle.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
+    },
+    uploaddetails: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataReq = req.allParams();
+                var query = sails.config.querys.ques_upload_ques_details.replace('?', dataReq.data_id).replace('??', dataReq.ques_id);
+                Course.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error listando las cargas detalle.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
+    },
+    disableupload: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro: 0
+                }
+                var filterUpdate = {
+                    data_id: dataRequest.data_id
+                }
+                QuestionsUpload.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No se eliminó la carga.";
+                            res.json(dataResponse);
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error eliminando la carga.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    });
+            }
+        });
+    },
+    enableupload: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro: 1
+                }
+                var filterUpdate = {
+                    data_id: dataRequest.data_id
+                }
+                QuestionsUpload.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No se habilitó la carga.";
+                            res.json(dataResponse);
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error habilitó la carga.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    });
+            }
+        });
+    },
+    disableuploaddet: function (req, res) {
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro: 0
+                }
+                var filterUpdate = {
+                    data_id: dataRequest.data_id,
+                    ques_id: dataRequest.ques_id
+                }
+                Questions.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No se eliminó la carga.";
+                            res.json(dataResponse);
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error eliminando la carga.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    });
+            }
+        });
+    },
+    enableuploaddet: function (req, res) {
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataRequest = req.allParams();
+                var dataUpdate = {
+                    est_registro: 1
+                }
+                var filterUpdate = {
+                    data_id: dataRequest.data_id,
+                    ques_id: dataRequest.ques_id
+                }
+                Questions.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No se habilitó la carga.";
+                            res.json(dataResponse);
+                        }
+                    })
+                    .catch(function (err) {
+                        dataResponse.res_service = "Error habilitó la carga.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse);
+                    });
+            }
+        });
+    }
 };

@@ -328,4 +328,32 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /questions/listuploads': {
+    controller: 'QuestionsController',
+    action: 'listuploads'
+  },
+  'get /questions/listuploadsdetails/:data_id': {
+    controller: 'QuestionsController',
+    action: 'listuploadsdetails'
+  },
+  'get /questions/disableupload/:data_id': {
+    controller: 'QuestionsController',
+    action: 'disableupload'
+  },
+  'get /questions/enableupload/:data_id': {
+    controller: 'QuestionsController',
+    action: 'enableupload'
+  },
+  'get /questions/disableuploaddet/:data_id/:ques_id': {
+    controller: 'QuestionsController',
+    action: 'disableuploaddet'
+  },
+  'get /questions/enableuploaddet/:data_id/:ques_id': {
+    controller: 'QuestionsController',
+    action: 'enableuploaddet'
+  },
+  'get /questions/uploaddetails/:data_id/:ques_id': {
+    controller: 'QuestionsController',
+    action: 'uploaddetails'
+  },
 };
