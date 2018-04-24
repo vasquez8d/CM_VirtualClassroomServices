@@ -89,6 +89,45 @@ module.exports = {
             }
         });
     },
+    update: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataUpdate = req.allParams();
+                var filterUpdate = {
+                    data_id: dataUpdate.data_id,
+                    ques_id: dataUpdate.ques_id
+                }
+                Questions.update(filterUpdate, dataUpdate)
+                    .then(function (response) {
+                        if (response.length > 0) {
+                            dataResponse.data_result = response[0];
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse)
+                        } else {
+                            dataResponse.res_service = 'No se actualizó la pregunta.';
+                            res.json(dataResponse)
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        dataResponse.res_service = "Error actualizando la pregunta.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    });
+            }
+        });
+    },
     listuploads: function(req, res){
         var dataResponse = {
             data_result: "",

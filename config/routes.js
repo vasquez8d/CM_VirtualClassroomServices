@@ -328,6 +328,13 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'post /questions/update': {
+    controller: 'QuestionsController',
+    action: 'update',
+    cors: {
+      origin: '*'
+    }
+  },
   'get /questions/listuploads': {
     controller: 'QuestionsController',
     action: 'listuploads'
