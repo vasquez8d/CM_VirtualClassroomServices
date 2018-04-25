@@ -5,6 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 module.exports = {
     create: function (req, res) {
@@ -31,6 +32,36 @@ module.exports = {
                         response.save();
                         dataResponse.data_result = response;
                         dataResponse.res_service = "ok";
+
+                        // SEND MAIL =========
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            auth: {
+                                type: "OAuth2",
+                                user: "vasquez9d@gmail.com",
+                                clientId: "1032639250330-1vsu6lu6alsdahv1e5ommkhse3jcpi5i.apps.googleusercontent.com",
+                                clientSecret: "osOOEMGnDunC2KqvtnOC046l",
+                                refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"
+                            }
+                        })
+
+                        var mailOptions = {
+                            from: 'Clinical Medic - Información <vasquez9d@gmail.com>',
+                            to: 'vasquez8d@gmail.com',
+                            subject: 'Nuevo registro de matricular pendiente',
+                            text: '¡Hola!, un usuario trata de comprar un curso y necesita que valides su voucher.'
+                        }
+
+                        transporter.sendMail(mailOptions, function (err, res) {
+                            if (err) {
+                                console.log(err);
+                                console.log('Error');
+                            } else {
+                                console.log('Email Sent to: ' + dataValidate.user_mail);
+                            }
+                        })
+                        // ===================
+
                         res.json(dataResponse);
                     }
                 });
@@ -223,4 +254,3 @@ module.exports = {
         });
     },
 };
-

@@ -47,10 +47,10 @@ module.exports = {
                         })
 
                         var mailOptions = {
-                            from: 'Alexsandre Vasquez <vasquez9d@gmail.com>',
+                            from: 'Clinical Medic - Seguridad <vasquez9d@gmail.com>',
                             to: dataValidate.user_mail,
                             subject: 'Validación de correo electrónico',
-                            text: 'Hola, tu código de validación para la página web Studen Clinical Medic es: ' + randomCode
+                            text: '¡Hola!, tu código de validación para la página web Studen Clinical Medic es: ' + randomCode + ', ingresa esté codigo para completar el registro.'
                         }
                         
                         transporter.sendMail(mailOptions, function (err, res) {

@@ -59,12 +59,12 @@ module.exports = {
                                     dataResponse.des_error = err;
                                     res.json(dataResponse);
                                 } else {
-                                    responseHeader.save();                                    
+                                    responseHeader.save();                                  
                                     output.forEach(element => {
                                         index = index + 1;
                                         element["usu_registro"] = "web"; 
-                                        element["ques_id"] = index;
-                                        element["data_id"] = responseHeader.data_id;                                        
+                                        element["row_num"] = index;
+                                        element["data_id"] = responseHeader.data_id;                                     
                                         Questions.create(element, function (err, response) {
                                             if (err) {
                                                 dataResponse.res_service = "Error insertando el banco de preguntas detalle";

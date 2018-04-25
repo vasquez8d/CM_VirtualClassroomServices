@@ -11,12 +11,14 @@ module.exports = {
   attributes: {
     ques_id: {
       primaryKey: true,
+      unique: true,
       autoIncrement: true,
       type: "integer"
     },
     data_id: {
-      primaryKey: true,
-      autoIncrement: true,
+      type: "integer"
+    },
+    row_num: {
       type: "integer"
     },
     ques_name: 'string',
