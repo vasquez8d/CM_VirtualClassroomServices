@@ -22,7 +22,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataCreate = req.allParams();
-                Comment.create(dataCreate, function (err, response) {
+                CommentClass.create(dataCreate, function (err, response) {
                     if (err) {
                         dataResponse.res_service = "Error creando el comentario.";
                         dataResponse.des_error = err;
@@ -58,7 +58,7 @@ module.exports = {
                 var filterUpdate = {
                     com_id: dataRequest.com_id
                 }
-                Comment.update(filterUpdate, dataUpdate)
+                CommentClass.update(filterUpdate, dataUpdate)
                     .then(function (response) {
                         if (response.length > 0) {
                             dataResponse.res_service = "ok";
