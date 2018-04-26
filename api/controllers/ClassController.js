@@ -193,9 +193,24 @@ module.exports = {
                         res.json(dataResponse)
                     }
                     if (result.rows.length > 0) {
-                        dataResponse.data_result = result.rows;
-                        dataResponse.res_service = "ok";
-                        res.json(dataResponse)
+
+                        var dataFinal = [];
+
+                        result.rows.forEach(element => {
+                            var queryCom = sails.config.querys.com_list_x_class.replace('?', element.class_id);
+                            CommentClass.query(queryCom, function(err, resCom){
+                                if(err){
+                                }
+                                if(resCom.rows.length  > 0){
+                                    element["coments"] = resCom.rows;    
+                                }                                  
+                                dataFinal.push(element)    
+                                dataResponse.data_result = dataFinal;
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse)                                                   
+                            });                                                       
+                        });                                            
+
                     } else {
                         dataResponse.res_service = "No existe información.";
                         res.json(dataResponse)
