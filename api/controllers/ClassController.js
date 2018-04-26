@@ -195,6 +195,7 @@ module.exports = {
                     if (result.rows.length > 0) {
 
                         var dataFinal = [];
+                        var index = 0;
 
                         result.rows.forEach(element => {
                             var queryCom = sails.config.querys.com_list_x_class.replace('?', element.class_id);
@@ -203,13 +204,16 @@ module.exports = {
                                 }
                                 if(resCom.rows.length  > 0){
                                     element["coments"] = resCom.rows;    
-                                }                                  
-                                dataFinal.push(element)    
-                                dataResponse.data_result = dataFinal;
-                                dataResponse.res_service = "ok";
-                                res.json(dataResponse)                                                   
-                            });                                                       
-                        });                                            
+                                }         
+                                index = index + 1;
+                                dataFinal.push(element)
+                                if (result.rows.length == index){
+                                    dataResponse.data_result = dataFinal;
+                                    dataResponse.res_service = "ok";
+                                    res.json(dataResponse) 
+                                }
+                            });
+                        });
 
                     } else {
                         dataResponse.res_service = "No existe información.";
