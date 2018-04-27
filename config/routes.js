@@ -363,4 +363,21 @@ module.exports.routes = {
     controller: 'QuestionsController',
     action: 'uploaddetails'
   },
+  /***************************************************************************
+  * routes Test                                                              *
+  ***************************************************************************/ 
+  'post /test/create': {
+    controller: 'TestController',
+    action: 'create',
+    cors: {
+      origin: '*'
+    }
+  },
+  'post /test/finalize': {
+    controller: 'TestController',
+    action: 'finalize',
+    cors: {
+      origin: '*'
+    }
+  }, 
 };
