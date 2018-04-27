@@ -310,6 +310,10 @@ module.exports.routes = {
   'post /mat/create': {
     controller: 'MatCourseController',
     action: 'create'
+  }, 
+  'post /mat/createfree': {
+    controller: 'MatCourseController',
+    action: 'createfree'
   },
   'post /mat/uploadimage': {
     controller: 'MatCourseController',
