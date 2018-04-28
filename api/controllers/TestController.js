@@ -91,6 +91,13 @@ module.exports = {
                 var dataTest = req.allParams();
                 var dataTestFinal = [];
 
+                var querySaludPublica = 'select * from tbl_data_questions_det p where p.cat_cor_id = 13 order by random() limit ';
+                var queryCienciBasics = 'select * from tbl_data_questions_det p where p.cat_cor_id = 10 order by random() limit ';
+                var queryGinecologia = 'select * from tbl_data_questions_det p where p.cat_cor_id = 15 order by random() limit ';
+                var queryPediatria = 'select * from tbl_data_questions_det p where p.cat_cor_id = 16 order by random() limit ';
+                var queryCirugia = 'select * from tbl_data_questions_det p where p.cat_cor_id = 17 order by random() limit ';
+                var queryMedicGeneral = 'select * from tbl_data_questions_det p where p.cat_cor_id = 18 order by random() limit ';
+
                 if (dataTest.test_type_id == 1 || dataTest.test_type_id == 2){
                     
                     var numQuesSaludPublic = parseInt(dataTest.test_num_ques * 0.1);
@@ -109,17 +116,17 @@ module.exports = {
                         numQuesMedicGenerl = numQuesMedicGenerl + (dataTest.test_num_ques - totQuestions);
                     }
 
-                    var querySaludPublica = 'select * from tbl_data_questions_det p where p.cat_cor_id = 13 order by random() limit ' + numQuesSaludPublic;
-                    var queryCienciBasics = 'select * from tbl_data_questions_det p where p.cat_cor_id = 10 order by random() limit ' + numQuesCiencBasics;
-                    var queryGinecologia  = 'select * from tbl_data_questions_det p where p.cat_cor_id = 15 order by random() limit ' + numQuesGinecologia;
-                    var queryPediatria    = 'select * from tbl_data_questions_det p where p.cat_cor_id = 16 order by random() limit ' + numQuesPediatria;
-                    var queryCirugia      = 'select * from tbl_data_questions_det p where p.cat_cor_id = 17 order by random() limit ' + numQuesCirugia;
-                    var queryMedicGeneral = 'select * from tbl_data_questions_det p where p.cat_cor_id = 18 order by random() limit ' + numQuesMedicGenerl;
+                    var querySaludPublica = querySaludPublica + numQuesSaludPublic;
+                    var queryCienciBasics = queryCienciBasics + numQuesCiencBasics;
+                    var queryGinecologia  = queryGinecologia + numQuesGinecologia;
+                    var queryPediatria    = queryPediatria + numQuesPediatria;
+                    var queryCirugia      = queryCirugia + numQuesCirugia;
+                    var queryMedicGeneral = queryMedicGeneral + numQuesMedicGenerl;
+                    var queryTest = '';
+
+                    var index = 0;
 
                     for(var i=0 ; i<6 ; i++){
-
-                        var queryTest = '';
-
                         switch(i){
                             case 0:
                                 queryTest = querySaludPublica;
@@ -140,8 +147,8 @@ module.exports = {
                                 queryTest = queryMedicGeneral;
                                 break;
                         }
-
                         Questions.query(queryTest, function (err, result) {
+                            index = index + 1;
                             if (err) {
                                 dataResponse.res_service = "Error creando examen";
                                 dataResponse.des_error = err;
@@ -153,28 +160,141 @@ module.exports = {
                             } else {
                                 dataResponse.res_service = "No existe información.";
                             }
+                            if (index == 6) {
+                                dataResponse.data_result = dataTestFinal;
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse);
+                            }
                         });
                     }
-                    
                 } else if(dataTest.test_type_id == 3) {
-                    
+                    var querySaludPublica = querySaludPublica + dataTest.test_num_ques;
+                    Questions.query(querySaludPublica, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 } else if (dataTest.test_type_id == 4) {
-
+                    var queryCienciBasics = queryCienciBasics + dataTest.test_num_ques;
+                    Questions.query(queryCienciBasics, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 } else if (dataTest.test_type_id == 5) {
-
+                    var queryGinecologia = queryGinecologia + dataTest.test_num_ques;
+                    Questions.query(queryGinecologia, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 } else if (dataTest.test_type_id == 6) {
-
+                    var queryPediatria = queryPediatria + dataTest.test_num_ques;
+                    Questions.query(queryPediatria, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 } else if (dataTest.test_type_id == 7) {
-
+                    var queryCirugia = queryCirugia + dataTest.test_num_ques;
+                    Questions.query(queryCirugia, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 } else if (dataTest.test_type_id == 8) {
-
+                    var queryMedicGeneral = queryMedicGeneral + dataTest.test_num_ques;
+                    Questions.query(queryMedicGeneral, function (err, result) {
+                        index = index + 1;
+                        if (err) {
+                            dataResponse.res_service = "Error creando examen";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        }
+                        if (result.rows.length > 0) {
+                            result.rows.forEach(element => {
+                                dataTestFinal.push(element);
+                            });
+                            dataResponse.data_result = dataTestFinal;
+                            dataResponse.res_service = "ok";
+                            res.json(dataResponse);
+                        } else {
+                            dataResponse.res_service = "No existe información.";
+                            res.json(dataResponse);
+                        }
+                    });
                 }
-
-                dataResponse.data_result = result.rows;
-                dataResponse.res_service = "ok";
-                res.json(dataResponse)
             }
         });
     }
 };
-

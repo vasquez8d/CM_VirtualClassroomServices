@@ -384,4 +384,11 @@ module.exports.routes = {
       origin: '*'
     }
   }, 
+  'post /test/test': {
+    controller: 'TestController',
+    action: 'test',
+    cors: {
+      origin: '*'
+    }
+  },
 };
