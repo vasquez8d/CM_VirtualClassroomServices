@@ -33,9 +33,12 @@ module.exports = {
       type: 'string',
       required: true
     },
+    test_status: 'string',
     test_result: 'decimal',
-    test_time_end: 'integer',
-    test_num_ques_end: 'integer'
+    test_time_to_end: 'decimal',
+    test_ques_ok: 'integer',
+    test_ques_bad: 'integer',
+    test_ques_blank: 'integer'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false

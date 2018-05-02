@@ -53,7 +53,7 @@ module.exports = {
             } else {
                 var dataUpdate = req.allParams();
                 var filterUpdate = {
-                    class_id: dataUpdate.class_id
+                    test_id: dataUpdate.test_id
                 }
                 Test.update(filterUpdate, dataUpdate)
                     .then(function (response) {
@@ -293,6 +293,46 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
+                }
+            }
+        });
+    },
+    status: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var dataToken = req.headers.authorization;
+        var jwtKey = sails.config.values.jwtkey;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataDetails = req.allParams();
+                try {
+                    Test.find({ test_id: dataDetails.test_id, est_registro: 1 })
+                        .then(function (response) {
+                            if (response.length > 0) {
+                                dataResponse.data_result = response[0];
+                                dataResponse.res_service = "ok";
+                                res.json(dataResponse);
+                            } else {
+                                dataResponse.res_service = "No existen datos.";
+                                res.json(dataResponse);
+                            }
+                        })
+                        .catch(function (err) {
+                            dataResponse.res_service = "Error obteniendo el detalle examen1";
+                            dataResponse.des_error = err;
+                            res.json(dataResponse);
+                        });
+                } catch (err) {
+                    dataResponse.res_service = "Error obteniendo el detalle examen2";
+                    dataResponse.des_error = err;
+                    res.json(dataResponse);
                 }
             }
         });
