@@ -370,5 +370,39 @@ module.exports = {
                 });
             }
         });
+    },
+    details: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataDetails = req.allParams();
+                var query = sails.config.querys.test_details.replace('?', dataDetails.test_id);
+                Test.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error detalle examen.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
     }
 };
