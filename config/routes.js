@@ -381,6 +381,10 @@ module.exports.routes = {
     controller: 'TestController',
     action: 'status'
   },
+  'get /test/listxuser/:user_id': {
+    controller: 'TestController',
+    action: 'listxuser'
+  },   
   'post /test/finalize': {
     controller: 'TestController',
     action: 'finalize',

@@ -336,5 +336,39 @@ module.exports = {
                 }
             }
         });
+    },
+    listxuser: function(req, res){
+        var dataResponse = {
+            data_result: "",
+            res_service: "",
+            des_error: ""
+        };
+        var jwtKey = sails.config.values.jwtkey;
+        var dataToken = req.headers.authorization;
+        jwt.verify(dataToken, jwtKey, function (err, decoded) {
+            if (err) {
+                dataResponse.res_service = "401 unauthorized";
+                dataResponse.des_error = err;
+                res.json(dataResponse);
+            } else {
+                var dataReq = req.allParams();
+                var query = sails.config.querys.test_list_x_user.replace('?', dataReq.user_id);
+                Test.query(query, function (err, result) {
+                    if (err) {
+                        dataResponse.res_service = "Error listando los examenes.";
+                        dataResponse.des_error = err;
+                        res.json(dataResponse)
+                    }
+                    if (result.rows.length > 0) {
+                        dataResponse.data_result = result.rows;
+                        dataResponse.res_service = "ok";
+                        res.json(dataResponse)
+                    } else {
+                        dataResponse.res_service = "No existe información.";
+                        res.json(dataResponse)
+                    }
+                });
+            }
+        });
     }
 };
