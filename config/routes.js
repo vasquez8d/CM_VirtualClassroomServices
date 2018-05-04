@@ -377,13 +377,17 @@ module.exports.routes = {
       origin: '*'
     }
   },
+  'get /test/status/:test_id': {
+    controller: 'TestController',
+    action: 'status'
+  },
   'post /test/finalize': {
     controller: 'TestController',
     action: 'finalize',
     cors: {
       origin: '*'
     }
-  }, 
+  },
   'post /test/test': {
     controller: 'TestController',
     action: 'test',
