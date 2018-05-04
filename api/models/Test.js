@@ -35,10 +35,10 @@ module.exports = {
     },
     test_status: 'string',
     test_result: 'decimal',
-    test_time_to_end: 'decimal',
     test_ques_ok: 'integer',
     test_ques_bad: 'integer',
-    test_ques_blank: 'integer'
+    test_ques_blank: 'integer',
+    test_fec_finaliza: 'datetime'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
