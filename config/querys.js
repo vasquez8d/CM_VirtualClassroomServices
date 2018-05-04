@@ -22,5 +22,7 @@ module.exports.querys = {
     ques_list_det_query: "select cab.data_id, cab.data_file_name, det.ques_id, det.ques_name, cat_cor_name, det.ques_question, det.est_registro det_est_registro, cab.est_registro cab_est_registro, det.fec_reistro from tbl_data_questions_cab cab inner join tbl_data_questions_det det on cab.data_id = det.data_id inner join tbl_cat_course cat on det.cat_cor_id = cat.cat_cor_id where det.data_id = ?",
     ques_upload_ques_details: "select cab.data_id, cab.data_file_name, det.cat_cor_id, det.ques_id, det.ques_name, cat_cor_name, det.ques_question, det.ques_res1, det.ques_res2, det.ques_res3, det.ques_res4, det.ques_res5, det.ques_ok, det.est_registro det_est_registro, cab.est_registro cab_est_registro, det.fec_reistro, det.usu_registro from tbl_data_questions_cab cab inner join tbl_data_questions_det det on cab.data_id = det.data_id inner join tbl_cat_course cat on det.cat_cor_id = cat.cat_cor_id where det.data_id = ? and det.ques_id = ??",
     //Comments
-    com_list_x_class : "select cm.com_id, cm.com_text, cm.com_likes, cm.fec_registro, u.user_reg_provider_photo, u.user_id, (u.user_pri_nom || ' ' || u.user_ape_pat) user_full_name from tbl_comment cm INNER JOIN tbl_users u on cm.com_user_id = u.user_id where cm.class_id = ? and cm.est_registro = 1",
+    com_list_x_class: "select cm.com_id, cm.com_text, cm.com_likes, cm.fec_registro, u.user_reg_provider_photo, u.user_id, (u.user_pri_nom || ' ' || u.user_ape_pat) user_full_name from tbl_comment cm INNER JOIN tbl_users u on cm.com_user_id = u.user_id where cm.class_id = ? and cm.est_registro = 1",
+    //Tests
+    test_list_x_user: ""
 };

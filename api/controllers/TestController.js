@@ -98,7 +98,7 @@ module.exports = {
                 var queryCirugia = 'select * from tbl_data_questions_det p where p.cat_cor_id = 17 order by random() limit ';
                 var queryMedicGeneral = 'select * from tbl_data_questions_det p where p.cat_cor_id = 18 order by random() limit ';
 
-                if (dataTest.test_type_id == 1 || dataTest.test_type_id == 2){
+                if (dataTest.test_type_id == 11 || dataTest.test_type_id == 19){
                     
                     var numQuesSaludPublic = parseInt(dataTest.test_num_ques * 0.1);
                     var numQuesCiencBasics = parseInt(dataTest.test_num_ques * 0.1);
@@ -167,7 +167,7 @@ module.exports = {
                             }
                         });
                     }
-                } else if(dataTest.test_type_id == 3) {
+                } else if(dataTest.test_type_id == 13) {
                     var querySaludPublica = querySaludPublica + dataTest.test_num_ques;
                     Questions.query(querySaludPublica, function (err, result) {
                         index = index + 1;
@@ -188,7 +188,7 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
-                } else if (dataTest.test_type_id == 4) {
+                } else if (dataTest.test_type_id == 10) {
                     var queryCienciBasics = queryCienciBasics + dataTest.test_num_ques;
                     Questions.query(queryCienciBasics, function (err, result) {
                         index = index + 1;
@@ -209,7 +209,7 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
-                } else if (dataTest.test_type_id == 5) {
+                } else if (dataTest.test_type_id == 15) {
                     var queryGinecologia = queryGinecologia + dataTest.test_num_ques;
                     Questions.query(queryGinecologia, function (err, result) {
                         index = index + 1;
@@ -230,7 +230,7 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
-                } else if (dataTest.test_type_id == 6) {
+                } else if (dataTest.test_type_id == 16) {
                     var queryPediatria = queryPediatria + dataTest.test_num_ques;
                     Questions.query(queryPediatria, function (err, result) {
                         index = index + 1;
@@ -251,7 +251,7 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
-                } else if (dataTest.test_type_id == 7) {
+                } else if (dataTest.test_type_id == 17) {
                     var queryCirugia = queryCirugia + dataTest.test_num_ques;
                     Questions.query(queryCirugia, function (err, result) {
                         index = index + 1;
@@ -272,7 +272,7 @@ module.exports = {
                             res.json(dataResponse);
                         }
                     });
-                } else if (dataTest.test_type_id == 8) {
+                } else if (dataTest.test_type_id == 18) {
                     var queryMedicGeneral = queryMedicGeneral + dataTest.test_num_ques;
                     Questions.query(queryMedicGeneral, function (err, result) {
                         index = index + 1;
