@@ -24,6 +24,6 @@ module.exports.querys = {
     //Comments
     com_list_x_class: "select cm.com_id, cm.com_text, cm.com_likes, cm.fec_registro, u.user_reg_provider_photo, u.user_id, (u.user_pri_nom || ' ' || u.user_ape_pat) user_full_name from tbl_comment cm INNER JOIN tbl_users u on cm.com_user_id = u.user_id where cm.class_id = ? and cm.est_registro = 1",
     //Tests
-    test_list_x_user: "select ts.test_status, ts.test_id, ts.test_num_ques, ts.test_time, ts.test_result, ts.fec_registro, ts.test_fec_finaliza, cat.cat_cor_name from tbl_tests ts inner join tbl_cat_course cat on ts.test_type_id = cat.cat_cor_id where ts.user_id = ? order by ts.fec_registro desc;",
-    test_details: "select ts.test_ques_ok, ts.test_ques_bad, ts.test_ques_blank ,ts.test_status, ts.test_id, ts.test_num_ques, ts.test_time, ts.test_result, ts.fec_registro, ts.test_fec_finaliza, cat.cat_cor_name from tbl_tests ts inner join tbl_cat_course cat on ts.test_type_id = cat.cat_cor_id where ts.test_id = ?"
+    test_list_x_user: "select ts.test_fec_start, ts.test_status, ts.test_id, ts.test_num_ques, ts.test_time, ts.test_result, ts.fec_registro, ts.test_fec_finaliza, cat.cat_cor_name from tbl_tests ts inner join tbl_cat_course cat on ts.test_type_id = cat.cat_cor_id where ts.user_id = ? order by ts.fec_registro desc;",
+    test_details: "select ts.test_fec_start, ts.test_ques_ok, ts.test_ques_bad, ts.test_ques_blank ,ts.test_status, ts.test_id, ts.test_num_ques, ts.test_time, ts.test_result, ts.fec_registro, ts.test_fec_finaliza, cat.cat_cor_name from tbl_tests ts inner join tbl_cat_course cat on ts.test_type_id = cat.cat_cor_id where ts.test_id = ?"
 };

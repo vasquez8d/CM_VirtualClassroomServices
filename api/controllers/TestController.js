@@ -52,6 +52,7 @@ module.exports = {
                 res.json(dataResponse);
             } else {
                 var dataUpdate = req.allParams();
+                console.log(dataUpdate);
                 var filterUpdate = {
                     test_id: dataUpdate.test_id
                 }

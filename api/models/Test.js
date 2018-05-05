@@ -38,7 +38,8 @@ module.exports = {
     test_ques_ok: 'integer',
     test_ques_bad: 'integer',
     test_ques_blank: 'integer',
-    test_fec_finaliza: 'datetime'
+    test_fec_finaliza: 'string',
+    test_fec_start: 'string'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
