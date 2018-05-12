@@ -15,12 +15,13 @@ module.exports = {
       autoIncrement: true,
       type: 'integer'
     },
-    user_pri_esp: 'string',
-    user_seg_esp: 'string',
-    user_pri_uni: 'string',
-    user_seg_uni: 'string',
+    user_uni_procede: 'string',
+    user_uni_facu: 'string',
+    user_año_egreso_ingreso: 'string',
+    user_uni_ciclo: 'string',
     user_flg_qto_sup : 'string',
-    user_uni_prc : 'string',
+    user_internado : 'string',
+    user_hosp_internado: 'string',
     est_registro: {
       type: 'integer',
       defaultsTo: 1
