@@ -249,6 +249,10 @@ module.exports.routes = {
   'post /class/update': {
     controller: 'ClassController',
     action: 'update'
+  }, 
+  'post /class/updatefilename': {
+    controller: 'ClassController',
+    action: 'updatefilename'
   },
   'get /class/listxcourse/:cor_id': {
     controller: 'ClassController',

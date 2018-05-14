@@ -34,7 +34,13 @@ module.exports = {
     usu_reg_id: {
       type: 'integer'
     },
-    class_time: 'decimal'
+    class_time: 'decimal',
+    class_file: 'string',
+    class_file_flag: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    class_file_name: 'string'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
