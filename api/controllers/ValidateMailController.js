@@ -6,6 +6,8 @@
  */
 
 const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
+const fs = require('fs');
 
 module.exports = {
     validatemailwoauth: function(req, res){
@@ -33,7 +35,19 @@ module.exports = {
                         response.save();
                         dataResponse.data_result = response;
                         dataResponse.res_service = "ok";
+                        
                         // SEND MAIL =========
+                        var readHTMLFile = function(path, callback) {
+                            fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                                if (err) {
+                                    throw err;
+                                    callback(err);
+                                }
+                                else {
+                                    callback(null, html);
+                                }
+                            });
+                        };
 
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
@@ -44,25 +58,30 @@ module.exports = {
                                 clientSecret: "osOOEMGnDunC2KqvtnOC046l",
                                 refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"                              
                             }
-                        })
+                        });
+                        readHTMLFile('assets/templates/tmp_velidacion_mail.html', 
+                            function(err, html) {
+                                var template = handlebars.compile(html);
+                                var replacements = {
+                                    codigo: randomCode
+                                };
+                                var htmlToSend = template(replacements);
+                                var mailOptions = {
+                                    from: 'Clinical Medic - Seguridad <vasquez9d@gmail.com>',
+                                    to: dataValidate.user_mail,
+                                    subject: 'Validación de correo electrónico',
+                                    html: htmlToSend
+                                };  
 
-                        var mailOptions = {
-                            from: 'Clinical Medic - Seguridad <vasquez9d@gmail.com>',
-                            to: dataValidate.user_mail,
-                            subject: 'Validación de correo electrónico',
-                            text: '¡Hola!, tu código de validación para la página web Studen Clinical Medic es: ' + randomCode + ', ingresa esté codigo para completar el registro.'
-                        }
-                        
-                        transporter.sendMail(mailOptions, function (err, res) {
-                            if(err){
-                                console.log(err);
-                                console.log('Error');
-                            } else {
-                                console.log('Email Sent to: '+ dataValidate.user_mail);
-                            }
-                        })
-
+                                transporter.sendMail(mailOptions, function (error, response) {
+                                    if (error) {
+                                        console.log(error);
+                                        callback(error);
+                                    }
+                                });
+                            });
                         // ===================
+
                         res.json(dataResponse);
                     } else {
                         dataResponse.res_service = 'No se registró la validación.';
