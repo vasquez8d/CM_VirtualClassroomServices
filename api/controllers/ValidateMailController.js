@@ -48,7 +48,6 @@ module.exports = {
                                 }
                             });
                         };
-
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
                             auth: {
@@ -71,8 +70,7 @@ module.exports = {
                                     to: dataValidate.user_mail,
                                     subject: 'Validación de correo electrónico',
                                     html: htmlToSend
-                                };  
-
+                                };
                                 transporter.sendMail(mailOptions, function (error, response) {
                                     if (error) {
                                         console.log(error);
@@ -81,7 +79,6 @@ module.exports = {
                                 });
                             });
                         // ===================
-
                         res.json(dataResponse);
                     } else {
                         dataResponse.res_service = 'No se registró la validación.';

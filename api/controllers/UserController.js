@@ -108,36 +108,49 @@ module.exports = {
                                 var _token = jwt.sign({ user: response.user_mail, password: response.user_pw }, jwtKey);
                                 dataResponse.token = _token;
 
-                        // ENVIAR EMAIL DE BIENVENIDA
-                        // SEND MAIL =========
-                        var transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
-                            auth: {
-                                type: "OAuth2",
-                                user: "vasquez9d@gmail.com",
-                                clientId: "1032639250330-1vsu6lu6alsdahv1e5ommkhse3jcpi5i.apps.googleusercontent.com",
-                                clientSecret: "osOOEMGnDunC2KqvtnOC046l",
-                                refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"                              
-                            }
-                        })
-
-                        var mailOptions = {
-                            from: 'Clinical Medic - Seguridad <vasquez9d@gmail.com>',
-                            to: dataValidate.user_mail,
-                            subject: 'Validación de correo electrónico',
-                            text: '¡Hola!, tu código de validación para la página web Studen Clinical Medic es: ' + randomCode + ', ingresa esté codigo para completar el registro.'
-                        }
-                        
-                        transporter.sendMail(mailOptions, function (err, res) {
-                            if(err){
-                                console.log(err);
-                                console.log('Error');
-                            } else {
-                                console.log('Email Sent to: '+ dataValidate.user_mail);
-                            }
-                        })
-                        // ===================
-
+                                // SEND MAIL =========
+                                var readHTMLFile = function(path, callback) {
+                                    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                                        if (err) {
+                                            throw err;
+                                            callback(err);
+                                        }
+                                        else {
+                                            callback(null, html);
+                                        }
+                                    });
+                                };
+                                var transporter = nodemailer.createTransport({
+                                    host: 'smtp.gmail.com',
+                                    auth: {
+                                        type: "OAuth2",
+                                        user: "vasquez9d@gmail.com",
+                                        clientId: "1032639250330-1vsu6lu6alsdahv1e5ommkhse3jcpi5i.apps.googleusercontent.com",
+                                        clientSecret: "osOOEMGnDunC2KqvtnOC046l",
+                                        refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"                              
+                                    }
+                                });
+                                readHTMLFile('assets/templates/tmp_wellcome.html', 
+                                    function(err, html) {
+                                        var template = handlebars.compile(html);
+                                        var replacements = {
+                                            name: response.user_pri_nom
+                                        };
+                                        var htmlToSend = template(replacements);
+                                        var mailOptions = {
+                                            from: 'Clinical Medic <vasquez9d@gmail.com>',
+                                            to: response.user_mail,
+                                            subject: 'Bienvenido a Student Clinical Medic',
+                                            html: htmlToSend
+                                        };
+                                        transporter.sendMail(mailOptions, function (error, response) {
+                                            if (error) {
+                                                console.log(error);
+                                                callback(error);
+                                            }
+                                        });
+                                    });
+                                // ===================                        
                                 dataResponse.data_result = response;
                                 dataResponse.res_service = "ok";
 
