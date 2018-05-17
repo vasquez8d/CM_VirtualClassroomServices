@@ -6,6 +6,8 @@
  */
 var jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
+const fs = require('fs');
 
 module.exports = {
     create: function (req, res) {
@@ -66,7 +68,7 @@ module.exports = {
                                         var mailOptions = {
                                             from: 'Clinical Medic <vasquez9d@gmail.com>',
                                             to: 'informes@cienciasmedic.com',
-                                            subject: 'Bienvenido a Student Clinical Medic',
+                                            subject: 'Nueva matrícula en Student Clinical Medic',
                                             cc: 'vasquez8d@gmail.com',
                                             html: htmlToSend
                                         };

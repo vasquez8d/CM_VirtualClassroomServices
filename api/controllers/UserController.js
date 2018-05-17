@@ -7,6 +7,9 @@
 
 var jwt = require('jsonwebtoken');
 var CryptoJS = require('crypto-js');
+const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
+const fs = require('fs');
 
 module.exports = {
 	login: function(req, res) {
