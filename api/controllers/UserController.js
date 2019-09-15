@@ -631,7 +631,7 @@ module.exports = {
                     // ===================   
 
                     dataResponse.res_service = "ok";
-
+                    res.json(dataResponse);
                 } else {
                     dataResponse.type_error = 'email';
                     dataResponse.res_service = 'El usuario no existe o deshabilitado.';
