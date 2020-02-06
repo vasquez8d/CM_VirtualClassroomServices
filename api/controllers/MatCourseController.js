@@ -69,6 +69,7 @@ module.exports = {
                                             from: 'Clinical Medic <vasquez9d@gmail.com>',
                                             to: 'informes@cienciasmedic.com',
                                             subject: 'Nueva matrícula en Student Clinical Medic',
+                                            cc: 'vasquez8d@gmail.com',
                                             html: htmlToSend
                                         };
                                         transporter.sendMail(mailOptions, function (error, response) {
