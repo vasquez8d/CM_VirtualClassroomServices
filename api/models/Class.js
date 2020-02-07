@@ -40,7 +40,8 @@ module.exports = {
       type: 'integer',
       defaultsTo: 0
     },
-    class_file_name: 'string'
+    class_file_name: 'string',
+    class_video_type: 'integer'
   },
   autoCreatedAt: false,
   autoUpdatedAt: false
