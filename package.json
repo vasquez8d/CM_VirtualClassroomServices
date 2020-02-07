@@ -19,7 +19,7 @@
     "grunt-contrib-watch": "1.0.0",
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
-    "handlebars": "^4.7.3",
+    "handlebars": "^4.0.11",
     "include-all": "^1.0.0",
     "jsonwebtoken": "^8.2.0",
     "node-excel-to-json": "0.0.3",
