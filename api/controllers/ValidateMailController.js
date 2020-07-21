@@ -41,23 +41,30 @@ module.exports = {
                             fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
                                 if (err) {
                                     throw err;
-                                    callback(err);
                                 }
                                 else {
                                     callback(null, html);
                                 }
                             });
                         };
-                        var transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
+                        // var transporter = nodemailer.createTransport({
+                        //     host: 'smtp.gmail.com',
+                        //     auth: {
+                        //         type: "OAuth2",
+                        //         user: "vasquez9d@gmail.com",
+                        //         clientId: "1032639250330-1vsu6lu6alsdahv1e5ommkhse3jcpi5i.apps.googleusercontent.com",
+                        //         clientSecret: "osOOEMGnDunC2KqvtnOC046l",
+                        //         refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"                              
+                        //     }
+                        // });
+                        const transporter = nodemailer.createTransport({
+                            service: 'gmail',
                             auth: {
-                                type: "OAuth2",
-                                user: "vasquez9d@gmail.com",
-                                clientId: "1032639250330-1vsu6lu6alsdahv1e5ommkhse3jcpi5i.apps.googleusercontent.com",
-                                clientSecret: "osOOEMGnDunC2KqvtnOC046l",
-                                refreshToken: "1/R0NDCxCzavaN5sQx4hMdWFsi-WXi4QpeP_rbrig-d5U"                              
+                              user: 'vasquez9d@gmail.com',
+                              pass: 'jdqlmorogwcytslu' // naturally, replace both with your real credentials or an application-specific password
                             }
-                        });
+                          });
+
                         readHTMLFile('assets/templates/tmp_velidacion_mail.html', 
                             function(err, html) {
                                 var template = handlebars.compile(html);
@@ -73,7 +80,6 @@ module.exports = {
                                 };
                                 transporter.sendMail(mailOptions, function (error, response) {
                                     if (error) {
-                                        console.log(error);
                                         callback(error);
                                     }
                                 });
